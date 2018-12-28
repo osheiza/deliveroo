@@ -13,29 +13,17 @@ import numpy as np
 from matplotlib import pyplot as plt
 
 #Load data into dataframe
-os.chdir('/Users/osheizaotori/Desktop/Jobs/Deliveroo/Final Project')
+os.chdir('/Users/osheizaotori/Desktop/Jobs/Deliveroo/deliveroo')
 rgr_raw_data = pd.read_csv('rgr_data_test-2 (1).csv')
 
-#Exploratory Data Analysis
+#SECTION 1: Exploratory Data Analysis
 print(rgr_raw_data.head())
-print(np.median)
-
-#Separate into acquisition channels
-referral = rgr_raw_data[rgr_raw_data.ACQUISITION_CHANNEL == 'Referral']
-digital = rgr_raw_data[rgr_raw_data.ACQUISITION_CHANNEL == 'Digital']
-organic = rgr_raw_data[rgr_raw_data.ACQUISITION_CHANNEL == 'Organic']
-job_platforms = rgr_raw_data[rgr_raw_data.ACQUISITION_CHANNEL == 'Job Platforms']
-offline = rgr_raw_data[rgr_raw_data.ACQUISITION_CHANNEL == 'Offline']
-unknown = rgr_raw_data[rgr_raw_data.ACQUISITION_CHANNEL == 'Unknown']
+print(rgr_raw_data.tail())
+print(rgr_raw_data.describe())
+print(pd.unique(rgr_raw_data['ACQUISITION_CHANNEL']))
+print(len(pd.unique(rgr_raw_data['RIDER_ID']))) #Current fleet
+## Rider 67787 is an outlier
 
 
-#Pie Chart
 
 
-#Plots of metrics to consider
-#Mean throughput by days of acquistion
-mean_by_days_since_acq = referral.groupby('DAYS_SINCE_ACQUISITION')['THROUGHPUT_CUMULATIVE'].mean()
-organic_by_days_since_acq = organic.groupby('DAYS_SINCE_ACQUISITION')['THROUGHPUT_CUMULATIVE'].mean()
-ax = mean_by_days_since_acq.plot(x='DAYS_SINCE_ACQUISITION', y='THROUGHPUT_CUMULATIVE', label='Referrals')
-organic_by_days_since_acq.plot(x='DAYS_SINCE_ACQUISITION', y='THROUGHPUT_CUMULATIVE', label='Organic', ax=ax)
-ax.set_ylabel('Orders/Hours')
